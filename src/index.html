@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Deevbet :: Virtual Sport Betting</title>
+	<link href="../dist/output.css" rel="stylesheet" />
+	<!-- favicon -->
+	<link rel="icon" type="image/x-icon" href="./public/favicon.png" />
+	<!-- Initialize Aos -->
+	<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+	<!-- Initialize animate css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- <link rel="stylesheet" href="lib/animate/animate.min.css"> -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+
+<body>
+	<div class="preloader fixed z-30 top-0 left-0 w-screen h-screen bg-white" style="display: none;">
+		<div
+			class="block relative left-1/2 w-[50px] h-[50px] rounded-full border-2 border-transparent border-t-primary">
+			loader
+		</div>
+	</div>
+	<main class="relative overflow-hidden h-screen ">
+		<!-- header -->
+		<header class="flex fixed items-center flex-col z-30 w-full bg-primary">
+			<div class="w-full bg-primary md:w-10/12 z-50 mx-auto px-10 py-2 flex items-center justify-between">
+				<!-- logo -->
+				<div class="uppercase text-gray-800 dark:text-white font-black text-3xl">
+					<a href="./index.html">
+						<img class="w-28" src="./public/logo_light.png" alt="">
+					</a>
+				</div>
+				<div class="flex items-center">
+					<!-- nav -->
+					<nav
+						class="font-sen text-gray-800 dark:text-white space-x-2 gap-5 uppercase text-base lg:flex items-center hidden">
+						<a href="#" class="hover:text-[#edcd2a] font-semibold transition text-white duration-150">
+							About us
+						</a>
+
+						<a href="./onboarding/login.html"
+							class="hover:text-[#edcd2a]  text-white font-semibold transition  duration-150">
+							Log in
+						</a>
+
+						<a href="./onboarding/register.html"
+							class="hover:text-[#edcd2a] font-semibold text-white transition duration-150">
+							Become an Agent
+						</a>
+					</nav>
+					<button id="navBtn" class="lg:hidden flex flex-col ml-4">
+						<span class="w-6 h-1 bg-white mb-1"> </span>
+						<span class="w-6 h-1 bg-white mb-1"> </span>
+						<span class="w-6 h-1 bg-white mb-1"> </span>
+					</button>
+				</div>
+			</div>
+			<!-- mobile nav -->
+			<div class="w-full md:hidden relative">
+				<nav id="navLinks"
+					class="navLinks bg-tertiary w-full -z-20 text-gray-800 dark:text-white uppercase text-base transition duration-150 hidden animate__animated animate__fadedown animate__delay-0.4s">
+					<a href="./onboarding/login.html"
+						class="block hover:text-[#edcd2a] py-4 pl-4 hover:bg-primary-light  font-semibold transition text-white duration-150">
+						Log in
+					</a>
+
+					<a href="./onboarding/register.html"
+						class="block hover:text-[#edcd2a] py-4 pl-4 hover:bg-primary-light font-semibold  transition text-white duration-150">
+						Become an Agent
+					</a>
+				</nav>
+			</div>
+		</header>
+		<!-- hero section -->
+
+		<div class="bg-transparent flex relative z-20 items-center h-full">
+			<div class="container md:ml-20 px-6 lg:flex relative py-16 justify-center items-center over-flow-hidden">
+				<div class="sm:w-6/6 lg:w-2/5 flex flex-col justify-center relative z-20 mt-20 md:m-24">
+					<h1
+						class="animate__animated animate__fadeInUp max-w-5xl text-4xl font-base leading-none tracking-tighter text-white md:text-5xl lg:text-6xl lg:max-w-7xl">
+						Become a <br class="hiddin md:block" />Deevbet agent
+					</h1>
+					<p
+						class="animate__animated animate__fadeInUp max-w-xl mx-auto mt-8 text-lg md:text-2xl leading-relaxed text-gray-50">
+						Join the fast moving train, enjoy the best offers in sport betting
+						in Nigeria.
+					</p>
+
+					<div class="flex mt-8 gap-2 ">
+						<!-- justify-center md:justify-start -->
+						<a href="./onboarding/register.html" class="herobtn animate__animated animate__fadeInUp animate__delay-0.4s  flex justify-center items-center gap-2 py-1.5  w-[140px] rounded-2xl border-2 text-white text-center
+								hover:bg-tertiary font-normal text-md leading-tight  shadow-lg
+								hover:shadow-lg transition duration-500 ease-in-out">
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+								class="text-white bi bi-person-add" viewBox="0 0 16 16">
+								<path
+									d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Zm-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" />
+								<path
+									d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z" />
+							</svg>
+							<p class="text-sm block tracking-tighter leading-loose font-semibold">
+								<span class="text-xs tracking-tighter font-light block leading-loose">Register
+									as</span>
+								An Agent
+							</p>
+						</a>
+					</div>
+				</div>
+				<div class="mt-10 -mb-48 block sm:w-full lg:2/5 lg:mt-0 -mr-48 relative wow fadeInRight">
+					<img src="./public/sports-big.png"
+						class="m-auto animate__animated animate__fadeInRight animate__delay-0.5s" />
+				</div>
+			</div>
+		</div>
+		<div
+			class="absolute right-0 left-0 top-0 buttom-0 over-flow-hidden h-full w-full bg-no-repeat hero bg-cover bg-center bg-fixed opacity-100">
+		</div>">
+		<img class="absolute left-0 right-0 bottom-0 z-20 w-full" src="./public/curve.svg" alt="">
+		</div>
+		<div class="bg-gradient-overlay"></div>
+	</main>
+	<section class="pattern bg-repeat p-5 md:p-10">
+		<div class="grid grid-cols-1  md:grid-cols-3 lg:w-9/12 mx-auto">
+			<div class="p-8 " data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000">
+				<div
+					class="bg-indigo-100 rounded-full w-16 h-16 flex justify-center items-center text-indigo-500 shadow-2xl mx-auto">
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+						class="bi bi-card-list" viewBox="0 0 16 16">
+						<path
+							d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z" />
+						<path
+							d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zM4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0zm0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+					</svg>
+				</div>
+				<h2 class="uppercase mt-6 text-center text-indigo-500 font-medium mb-3">
+					Transparency
+				</h2>
+				<p class="font-light text-sm text-gray-500 mb-3">
+					We get insulted by others, lose trust for those others. We get back
+					stabbed by friends. It becomes harder for us to give others a hand.
+				</p>
+				<a class="text-indigo-500 flex items-center hover:text-indigo-600" href="/">
+					More about us icon
+					<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 20 20"
+						fill="currentColor">
+						<path fill-rule="evenodd"
+							d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+							clip-rule="evenodd" />
+					</svg>
+				</a>
+			</div>
+
+			<div class="p-8" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000">
+				<div
+					class="bg-green-100 rounded-full w-16 h-16 flex justify-center items-center text-green-500 shadow-2xl mx-auto">
+					<svg fill="none" stroke="currentColor" width="32" height="32" viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round"
+							d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+						</path>
+					</svg>
+				</div>
+				<h2 class="uppercase mt-6 text-center text-green-500 font-medium mb-3">
+					Great Commission
+				</h2>
+				<p class="font-light text-sm text-gray-500 mb-3">
+					We get insulted by others, lose trust for those others. We get back
+					stabbed by friends. It becomes harder for us to give others a hand.
+				</p>
+				<a class="text-green-500 flex items-center hover:text-green-600" href="/">
+					More about us icon
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd"
+							d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+							clip-rule="evenodd" />
+					</svg>
+				</a>
+			</div>
+			<div class="p-8" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000">
+				<div
+					class="bg-red-100 rounded-full w-16 h-16 flex justify-center items-center text-red-500 shadow-2xl mx-auto">
+					<svg fill="none" stroke="currentColor" width="32" height="32" viewBox="0 0 24 24"
+						xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+						<path strokeLinecap="round" strokeLinejoin="round"
+							d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+					</svg>
+				</div>
+				<h2 class="uppercase mt-6 text-center text-red-500 font-medium mb-3">
+					Built in Insights
+				</h2>
+				<p class="font-light text-sm text-gray-500 mb-3">
+					We get insulted by others, lose trust for those others. We get back
+					stabbed by friends. It becomes harder for us to give others a hand.
+				</p>
+				<a class="text-red-500 flex items-center hover:text-red-600" href="/">
+					More about us icon
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+						<path fill-rule="evenodd"
+							d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+							clip-rule="evenodd" />
+					</svg>
+				</a>
+			</div>
+		</div>
+	</section>
+	<section class="text-gray-600 body-font relative bg-gray-100 ">
+		<div class="lg:w-8/12 px-5 py-10 mx-auto flex sm:flex-nowrap flex-wrap">
+			<div class="md:w-1/2 overflow-hidden sm:mr-10 flex justify-center relative" data-aos="fade-right"
+				data-aos-easing="linear" data-aos-duration="1000">
+				<div>
+					<div class="p-2 md:mt-10">
+						<h2 class="text-xl">Contact us
+						</h2>
+						<span
+							class="bg-tertiary block h-1 mt-1 group-hover:text-green-500 w-16 transition duration-150">
+						</span>
+					</div>
+					<div>
+						<h1 class="text-3xl my-6">Say Hello</h1>
+						<p class="text-sm md:text-lg text-gray-800">
+							Have a question? Our FAQs page may give you your answer.
+							We're available 24/7 via phone
+						</p>
+					</div>
+					<div class="mt-4 space-y-3">
+						<h2 class="title-font font-semibold text-gray-900 tracking-widest text-lg mt-4">PHONE</h2>
+						<p class="mt-1 text-gray-800 md:text-lg">Call Kajola: 08167820222 or Stone: 07032300589</p>
+						<h2 class="title-font font-semibold text-gray-900 tracking-widest text-lg">EMAIL</h2>
+						<a class="text-tertiary md:text-lg  leading-relaxed">support@deevbet.com</a>
+
+					</div>
+				</div>
+			</div>
+			<div class="md:w-1/2 bg-white flex flex-col md:ml-auto w-full p-10 mt-8 md:mt-0 rounded-lg"
+				data-aos="fade-up" data-aos-easing="linear" data-aos-duration="1000">
+				<!-- <h2 class="text-gray-900 text-lg mb-1 font-medium title-font">Feedback</h2> -->
+				<p class="leading-relaxed mb-4 text-gray-600">or you can fill in our contact form.
+					we'll be in touch.</p>
+				<div class="relative mb-2">
+					<label for="name" class="leading-7 text-sm text-gray-600">Name</label>
+					<input type="text" id="name" name="name" placeholder="Full Name"
+						class="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+				</div>
+				<div class="relative mb-2">
+					<label for="email" class="leading-7 text-sm text-gray-600">Email Address</label>
+					<input type="email" id="email" name="email" placeholder="abc@gmail.com"
+						class="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+				</div>
+				<div class="relative mb-2">
+					<label for="phone" class="leading-7 text-sm text-gray-600">Phone Number</label>
+					<input type="text" id="phone" name="phone" placeholder="09012345670"
+						class="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+				</div>
+				<div class="relative mb-2">
+					<label for="message" class="leading-7 text-sm text-gray-600">Message</label>
+					<textarea id="message" name="message" placeholder="Type in your message"
+						class="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 h-24 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+				</div>
+				<button
+					class="text-white bg-primary border-0 py-2 px-6 focus:outline-none hover:bg-tertiary rounded text-lg transition duration-200 ease-in-out">Button</button>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer class="bg-primary w-full p-4 ">
+		<div id="contact" class="px-4 pt-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8">
+			<div class="grid gap-10 mb-1 sm:grid-cols-2 lg:grid-cols-4">
+				<div class="sm:col-span-2 flex items-center mt-1 space-x-3">
+					<a href="/" aria-label="Go home" title="Company" class="inline-flex items-center">
+						<svg class="w-8 text-tertiary" viewBox="0 0 24 24" stroke-linejoin="round" stroke-width="2"
+							stroke-linecap="round" stroke-miterlimit="10" stroke="#f78f12" fill="#f78f12">
+							<rect x="3" y="1" width="7" height="12"></rect>
+							<rect x="3" y="17" width="7" height="6"></rect>
+							<rect x="14" y="1" width="7" height="6"></rect>
+							<rect x="14" y="11" width="7" height="12"></rect>
+						</svg>
+						<!-- <img class="w-36" src="./public/logo_light.png" alt="logo" /> -->
+						<span class="ml-2 text-xl font-bold tracking-wide text-white uppercase">Deevbet</span>
+					</a>
+					<a href="/"
+						class="text-gray-50 hover:text-gray-200 transition-colors duration-300 hover:text-deep-purple-accent-400">
+						<svg viewBox="0 0 24 24" fill="currentColor" class="h-5">
+							<path
+								d="M24,4.6c-0.9,0.4-1.8,0.7-2.8,0.8c1-0.6,1.8-1.6,2.2-2.7c-1,0.6-2,1-3.1,1.2c-0.9-1-2.2-1.6-3.6-1.6 c-2.7,0-4.9,2.2-4.9,4.9c0,0.4,0,0.8,0.1,1.1C7.7,8.1,4.1,6.1,1.7,3.1C1.2,3.9,1,4.7,1,5.6c0,1.7,0.9,3.2,2.2,4.1 C2.4,9.7,1.6,9.5,1,9.1c0,0,0,0,0,0.1c0,2.4,1.7,4.4,3.9,4.8c-0.4,0.1-0.8,0.2-1.3,0.2c-0.3,0-0.6,0-0.9-0.1c0.6,2,2.4,3.4,4.6,3.4 c-1.7,1.3-3.8,2.1-6.1,2.1c-0.4,0-0.8,0-1.2-0.1c2.2,1.4,4.8,2.2,7.5,2.2c9.1,0,14-7.5,14-14c0-0.2,0-0.4,0-0.6 C22.5,6.4,23.3,5.5,24,4.6z">
+							</path>
+						</svg>
+					</a>
+					<a href="/"
+						class="text-gray-50 hover:text-gray-200 transition-colors duration-300 hover:text-deep-purple-accent-400">
+						<svg viewBox="0 0 24 24" fill="currentColor" class="h-5">
+							<path
+								d="M22,0H2C0.895,0,0,0.895,0,2v20c0,1.105,0.895,2,2,2h11v-9h-3v-4h3V8.413c0-3.1,1.893-4.788,4.659-4.788 c1.325,0,2.463,0.099,2.795,0.143v3.24l-1.918,0.001c-1.504,0-1.795,0.715-1.795,1.763V11h4.44l-1,4h-3.44v9H22c1.105,0,2-0.895,2-2 V2C24,0.895,23.105,0,22,0z">
+							</path>
+						</svg>
+					</a>
+				</div>
+			</div>
+			<div class="flex flex-col justify-between pt-5 pb-10 border-t lg:flex-row">
+				<div>
+					<div class="sm:col-span-2 text-tertiary space-x-5">
+						<a class="text-sm font-semibold hover:text-secondary" href="./">About</a>
+						<a class="text-sm font-semibold hover:text-secondary"
+							href="./onboarding/register.html">Register</a>
+						<a class="text-sm font-semibold hover:text-secondary" href="./onboarding/login.html">Log
+							in</a>
+					</div>
+					<p class="text-sm pt-2 text-white">
+						© Copyright <span class='footer-date'></span> <span
+							class="text-tertiary font-semibold">deevbet</span>. All
+						rights reserved.
+					</p>
+				</div>
+				<div>
+					<p class="mt-4 text-sm text-white"> Powered by
+						<a class="hover:text-secondary text-tertiary font-semibold" href="/">stemlab kano</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<style>
+		.hero {
+			background-image: url(./public/all-sports-banner.png);
+		}
+
+		.herobtn p {
+			line-height: 0.783;
+		}
+
+		.pattern {
+			background-image: url(./public/download.jfif) !important;
+		}
+
+		main {
+			background: #7aa52e;
+			background: -moz-linear-gradient(-45deg, #96c93d 1%, #00b09b 100%);
+			background: -webkit-linear-gradient(-45deg, #96c93d 1%, #00b09b 100%);
+			background: linear-gradient(135deg, #96c93d 1%, #00b09b 100%);
+		}
+
+		.bg-gradient-overlay {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-image: linear-gradient(-151deg, rgba(150, 201, 61, 0.7) 23%, rgba(0, 176, 155, 0.7) 111%);
+			background: -webkit-linear-gradient(-151deg, #027b5bd4 23%, #044232c7 111%);
+			background: -moz-linear-gradient(-151deg, rgba(150, 201, 61, 0.7) 23%, rgba(0, 176, 155, 0.7) 111%);
+		}
+
+		/* .url(./public/banner3.jpg) !important; */
+		.debug {
+			border: red solid 1px;
+		}
+
+		.btn-gradient {
+			border: none;
+			background: #7aa52e;
+			background: -moz-linear-gradient(79deg, #7aa52e 29%, #007d6e 123%);
+			background: -webkit-linear-gradient(79deg, #7aa52e 29%, #007d6e 123%);
+			background: linear-gradient(79deg, #124236 29%, #156b55 123%);
+			/* filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7aa52e, endColorstr=#007d6e, GradientType=1);
+			color: #fff; */
+		}
+
+		.loader {
+			/* display: block;
+			position: relative;
+			left: 50%;
+			top: 50%;
+			width: 50px;
+			height: 50px;
+			margin: -25px 0 0 -25px;
+			border-radius: 50%;
+			border: 2px solid transparent;
+			border-top-color: #7aa52e; */
+			-webkit-animation: spin 2s linear infinite;
+			animation: spin 2s linear infinite;
+		}
+
+		.navLinks {
+			position: absolute;
+			top: -150px;
+			visibility: hidden;
+			display: block;
+			z-index: -2000;
+			transition: all 1s;
+		}
+
+		.open {
+			visibility: visible;
+			top: 0;
+		}
+	</style>
+	<!-- font awesome -->
+	<script src="https://kit.fontawesome.com/e306afbf76.js" crossorigin="anonymous"></script>
+	<!-- Initialize Aos -->
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script>
+		// // // //Initialize Aos 
+		AOS.init();
+
+		// // footer date
+		window.addEventListener('load', () => {
+			document.querySelector('.footer-date').innerHTML = new Date().getFullYear()
+		})
+		// // toggle navLinks
+		const navBtn = document.querySelector('#navBtn');
+		const navLinks = document.querySelector('#navLinks');
+		function closeNav() {
+			// deskLinks.style.display = "block"
+			// console.log("i will colse the navBar");
+			if (navLinks.classList.contains("open")) {
+				navLinks.classList.remove("open");
+			} else {
+				navLinks.classList.add("open");
+			}
+		}
+		// navbtn
+		navBtn.addEventListener("click", () => {
+			closeNav();
+		});
+
+	</script>
+	<script
+		src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.6.x/dist/component.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+</body>
+
+</html>

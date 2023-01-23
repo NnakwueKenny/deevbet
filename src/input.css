@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family:'Roboto' Arial, Helvetica, sans-serif;
+}
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}

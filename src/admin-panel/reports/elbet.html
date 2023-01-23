@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deev Bet | Elbet</title>
+    <link rel="icon" type="image/x-icon" href="../../public/favicon.png" />
+    <link href="../../../dist/output.css" rel="stylesheet" />
+    <link href="../../style.css" rel="stylesheet" />
+    <link href="../../../node_modules/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div>
+        <div x-data="setup()" x-init="$refs.loading.classList.add('hidden')" :class="{ 'dark': isDark}"
+            @resize.window="watchScreen()">
+            <div class="flex w-full h-screen antialiased text-gray-700 bg-gray-100 dark:bg-dark dark:text-light">
+                <!-- Loading screen -->
+                <div x-ref="loading"
+                    class="fixed inset-0 z-50 px-12 flex flex-col items-center justify-center text-2xl font-semibold text-white bg-primary">
+                    <div role="status">
+                        <svg aria-hidden="true" class="w-12 h-12 mr-2 text-secondary animate-spin fill-primary"
+                            viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                                fill="currentColor" />
+                            <path
+                                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                                fill="currentFill" />
+                        </svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class='animate-pulse'>
+                        <img src="../../public/logo_light.png" alt="logo" />
+                    </div>
+                </div>
+
+                <!-- Backdrop -->
+                <div x-show="isSidebarOpen" @click="isSidebarOpen = false" aria-hidden="true"
+                    class="fixed inset-0 z-10 bg-primary md:hidden opacity-50"></div>
+
+                <aside x-show="isSidebarOpen" x-transition:enter="transition-all transform duration-300 ease-in-out"
+                    x-transition:enter-start="-translate-x-full opacity-0"
+                    x-transition:enter-end="translate-x-0 opacity-100"
+                    x-transition:leave="transition-all transform duration-300 ease-in-out"
+                    x-transition:leave-start="translate-x-0 opacity-100"
+                    x-transition:leave-end="-translate-x-full opacity-0" x-ref="sidebar"
+                    @keydown.escape="window.innerWidth <= 768 ? isSidebarOpen = false : ''" tabindex="-1"
+                    class="fixed inset-y-0 z-10 flex flex-shrink-0 bg-primary md:static focus:outline-none">
+                    <!-- Mini column -->
+                    <nav class="flex flex-col flex-shrink-0 h-full overflow-hidden border-r dark:border-primary">
+                        <!-- Brand -->
+                        <a href='../dashboard/home.html' class="w-full flex justify-center shadow p-2 py-6 md:py-5">
+                            <img class='w-full max-w-[130px] max-h-[30px]' src="../../public/logo_light.png" alt="logo" />
+                        </a>
+                        <div
+                            class="h-full pb-4 scrollbar-thin scrollbar-thumb-primary scrollbar-track-green-300 overflow-y-auto w-[210px] flex flex-col flex-1 text-sm">
+                            <div class='transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                <a href="../dashboard/home.html"
+                                    class="flex items-center gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                    </svg>
+                                    <span class="">Overview</span>
+                                </a>
+                            </div>
+                            <div class='transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                <a href="../agents/agent-list.html"
+                                    class="flex items-center gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                    <span class='text'><i class="bi bi-people"></i></span>
+                                    <span class="">Agent List</span>
+                                </a>
+                            </div>
+                            <div class='transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                <a href="../cashiers/cashier-list.html"
+                                    class="flex items-center gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                    <span class='text'><i class="bi bi-person"></i></span>
+                                    <span class="">Cashier List</span>
+                                </a>
+                            </div>
+                            <div class='transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                <a href="../admins/admin-list.html"
+                                    class="flex items-center gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                                    </svg>
+                                    <span class="">Admin List</span>
+                                </a>
+                            </div>
+                            <div class='transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                <a href="../managers/managers-list.html"
+                                    class="flex items-center gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                    <span class='text'><i class="bi bi-kanban"></i></span>
+                                    <span class="">Manager's List</span>
+                                </a>
+                            </div>
+                            <div class='w-full nav-dropdown'>
+                                <div class='flex transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                    <button type='button'
+                                        class="pr-5 flex w-full items-center justify-between gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                        <div class='flex gap-2'>
+                                            <span class='text'><i class="bi bi-cash-coin"></i></span>
+                                            <span class="">Transactions</span>
+                                        </div>
+                                        <div>
+                                            <div class="close">
+                                                <i class="bi bi-chevron-compact-down"></i>
+                                            </div>
+                                            <div class="hidden open">
+                                                <i class="bi bi-chevron-compact-up"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="hidden w-full text-white shadow dropdown-item">
+                                    <a href='../transactions/transaction.html'
+                                        class='flex px-4 pl-10 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Wallet
+                                        Transaction</a>
+                                    <a href='../transactions/transfer.html'
+                                        class='flex px-4 pl-10 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Wallet
+                                        Transfer</a>
+                                </div>
+                            </div>
+                            <div class='transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                <a href="../payment/payment-requests.html"
+                                    class="flex items-center gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                    <span class='text'><i class="bi bi-cash"></i></span>
+                                    <span class="">Payment Requests</span>
+                                </a>
+                            </div>
+                            <div class='w-full nav-dropdown'>
+                                <div class='bg-purple-800 pl-1 '>
+                                    <button type='button'
+                                        class="pr-5 flex w-full items-center justify-between gap-2 p-2  bg-tertiary text-white focus:outline-none">
+                                        <div class='flex gap-2'>
+                                            <span class='text'><i class="bi bi-journal-bookmark"></i></span>
+                                            <span class="">Reports</span>
+                                        </div>
+                                        <div>
+                                            <div class="close">
+                                                <i class="bi bi-chevron-compact-down"></i>
+                                            </div>
+                                            <div class="hidden open">
+                                                <i class="bi bi-chevron-compact-up"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="text-xs hidden w-full text-white shadow dropdown-item">
+                                    <a href='./elbet.html'
+                                        class='flex px-2 pl-9 py-2 bg-secondary-light bg-opacity-25 hover:bg-purple-800'>Elbet</a>
+                                    <a href='./lucky-ball.html'
+                                        class='flex px-2 pl-9 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Lucky
+                                        Ball</a>
+                                    <a href='./lucky-greek.html'
+                                        class='flex px-2 pl-9 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Lucky
+                                        Greek</a>
+                                    <a href='./lucky-ball-commission.html'
+                                        class='flex px-2 pl-9 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>LuckyBall
+                                        Commission</a>
+                                    <a href='./lucky-greek-commission.html'
+                                        class='flex px-2 pl-9 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>LuckyGreek
+                                        Commission</a>
+                                    <a href='../transactions/transaction.html'
+                                        class='flex px-2 pl-9 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Manual
+                                        Fund report</a>
+                                </div>
+                            </div>
+                            <div class='w-full nav-dropdown'>
+                                <div class='flex transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                    <button type='button'
+                                        class="pr-5 flex w-full items-center justify-between gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                        <div class='flex gap-2'>
+                                            <span class='text'><i class="bi bi-person-check"></i></span>
+                                            <span class="">Promotions</span>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <div class="close">
+                                                    <i class="bi bi-chevron-compact-down"></i>
+                                                </div>
+                                                <div class="hidden open">
+                                                    <i class="bi bi-chevron-compact-up"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="hidden w-full text-white shadow dropdown-item">
+                                    <a href='../promotions/banners.html'
+                                        class='flex px-4 pl-10 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Manage
+                                        Banners</a>
+                                </div>
+                            </div>
+                            <div class='w-full nav-dropdown'>
+                                <div class='flex transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                    <button type='button'
+                                        class="pr-5 flex w-full items-center justify-between gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                        <div class='flex gap-2'>
+                                            <span class='text'><i class="bi bi-person"></i></span>
+                                            <span class="">Administration</span>
+                                        </div>
+                                        <div>
+                                            <div class="close">
+                                                <i class="bi bi-chevron-compact-down"></i>
+                                            </div>
+                                            <div class="hidden open">
+                                                <i class="bi bi-chevron-compact-up"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="hidden w-full text-white shadow dropdown-item">
+                                    <a href='../administration/activity-logs.html'
+                                        class='flex px-4 pl-10 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Activity
+                                        Logs</a>
+                                    <a href='../administration/bank-account.html'
+                                        class='flex px-4 pl-10 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Bank
+                                        Accounts</a>
+                                </div>
+                            </div>
+                            <div class='w-full nav-dropdown'>
+                                <div class='flex transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                    <button type='button'
+                                        class="pr-5 flex w-full items-center justify-between gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                        <div class='flex gap-2'>
+                                            <span class='text'><i class="bi bi-gear"></i></span>
+                                            <span class="">Settings</span>
+                                        </div>
+                                        <div>
+                                            <div class="close">
+                                                <i class="bi bi-chevron-compact-down"></i>
+                                            </div>
+                                            <div class="hidden open">
+                                                <i class="bi bi-chevron-compact-up"></i>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="hidden w-full text-white shadow dropdown-item">
+                                    <a href='../settings/change-password.html'
+                                        class='flex px-4 pl-10 py-2 bg-gray-500 bg-opacity-25 hover:bg-purple-800'>Change
+                                        Password</a>
+                                </div>
+                            </div>
+                            <div @click="openSearchPanel"
+                                class='md:hidden transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                <a href="#"
+                                    class="pr-5 flex items-center gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                    <span class="w-5 h-5 flex pl-1"><i class="bi bi-search"></i></span>
+                                    <span class="flex">Search</span>
+                                </a>
+                            </div>
+                            <div class='transition-colors duration-200 hover:bg-purple-800 pl-1'>
+                                <a href="#"
+                                    class="pr-5 flex items-center gap-2 p-2 transition-colors duration-200 hover:bg-tertiary text-white focus:outline-none">
+                                    <span class="w-5 h-5 pl-1"><i class="bi bi-box-arrow-right"></i></i></span>
+                                    <span class="">Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                </aside>
+
+                <div class="flex h-screen w-full overflow-hidden">
+                    <!-- Main content -->
+                    <main class="flex flex-col h-full w-full items-center relative">
+                        <header class="w-full flex items-center justify-between p-4 border-b shadow">
+                            <div class="flex items-center gap-x-4 md:gap-x-0">
+                                <!-- Sidebar button -->
+                                <button type='button'
+                                    @click="isSidebarOpen = true; $nextTick(() => { $refs.sidebar.focus() })"
+                                    class="p-1 text-gray-400 transition-colors duration-200 rounded-md bg-gray-50 md:hidden hover:text-primary hover:bg-primary-light dark:hover:text-light dark:hover:bg-secondary dark:bg-dark focus:outline-none focus:ring">
+                                    <span class="sr-only">Open main manu</span>
+                                    <span aria-hidden="true">
+                                        <svg x-show="!isSidebarOpen" class="w-8 h-8" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 6h16M4 12h16M4 18h16" />
+                                        </svg>
+                                        <svg x-show="isSidebarOpen" class="w-8 h-8" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </span>
+                                </button>
+                                <div class='hidden md:block'>
+                                    <h1 class="text-sm uppercase font-semibold current-date">
+                                        Dashboard
+                                    </h1>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <div class='hidden md:flex items-center gap-2'>
+                                    <a href='#'
+                                        class='flex gap-2 hover:bg-gray-200 dark:bg-opacity-25 py-1 px-3 rounded-md'>
+                                        <img alt='' src="../../public/wallet.png" class="w-6 h-5">
+                                        <span>753,244,243</span>
+                                        <span>NGN</span>
+                                    </a>
+                                    <button type='button'
+                                        class='flex gap-2 hover:bg-gray-200 dark:bg-opacity-25 py-1 px-3 rounded-md text-xs'
+                                        id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification">
+                                        <span><i class="bi bi-person-check"></i></span>
+                                        <span>Kene Nnakwue [1234]</span>
+                                        <span><i class="bi bi-chevron-compact-down"></i></span>
+                                    </button>
+                                    <div id="dropdownNotification"
+                                        class="z-20 hidden w-full max-w-sm bg-white divide-y divide-gray-100 rounded shadow-md dark:border dark:border-primary-light dark:bg-dark dark:divide-gray-500"
+                                        aria-labelledby="dropdownNotificationButton">
+                                        <div class="block px-4 py-2 font-medium text-center text-sm dark:bg-inherit">
+                                            Accounts
+                                        </div>
+                                        <div class="divide-y divide-gray-100 dark:divide-gray-700">
+                                            <a href="#"
+                                                class="text-sm flex flex-col px-4 py-3 bg-gray-50 hover:bg-gray-100 dark:bg-gray-700 dark:bg-opacity-25 dark:hover:bg-opacity-50">
+                                                <div class='w-full flex justify-between items-center'>
+                                                    <span>Kene Nnakwue</span>
+                                                    <div class='flex items-center'>
+                                                        <span class='text-green-500 font-bold text-xl'><i
+                                                                class="bi bi-check-lg"></i></span>
+                                                        <span class='text-red-500 font-bold text-2xl'><i
+                                                                class="bi bi-x"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class='w-full flex'>
+                                                    <span>ID: </span>
+                                                    <span>1234</span>
+                                                </div>
+                                                <div class='w-full flex'>
+                                                    <span>Wallet Account Number: </span>
+                                                    <span>112818934094</span>
+                                                </div>
+                                                <div class='w-full flex gap'>
+                                                    <span>76983942.24846789</span>
+                                                    <span>NGN</span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class='fle flex-col p-4'>
+                                            <div class='flex justify-end text-sm pb-4 pt-2 px-1'>
+                                                Access point ID: 1234
+                                            </div>
+                                            <a href="#"
+                                                class="block py-2 text-sm font-medium text-center bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:bg-opacity-25 dark:hover:bg-opacity-50">
+                                                <div class="inline-flex gap-2 items-center text-red-500">
+                                                    Log Out
+                                                    <span class><i class="bi bi-box-arrow-right"></i></span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Toggle dark theme button -->
+                                <button type='button' aria-hidden="true" class="relative focus:outline-none" x-cloak
+                                    @click="toggleTheme">
+                                    <div
+                                        class="w-10 h-5 transition bg-primary-light rounded-full outline-none dark:bg-secondary-light">
+                                    </div>
+                                    <div class="absolute top-0 left-0 inline-flex items-center justify-center w-5 h-5 transition-all duration-150 transform scale-110 rounded-full shadow-sm"
+                                        :class="{ 'translate-x-0 -translate-y-px  bg-white text-primary': !isDark, 'translate-x-6 text-secondary-light bg-secondary': isDark }">
+                                        <svg x-show="!isDark" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                        </svg>
+                                        <svg x-show="isDark" class="w-4 h-4" xmlns="http://www.w3.org/2000/svg"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                        </svg>
+                                    </div>
+                                </button>
+                                <!-- Search panel button -->
+                                <button type='button' @click="openSearchPanel"
+                                    class="hidden md:block p-2 text-gray-400 transition-colors duration-200 rounded-full hover:text-primary hover:bg-green-100 dark:hover:text-light dark:hover:bg-primary dark:bg-dark focus:outline-none focus:ring">
+                                    <span class="sr-only">Open search panel</span>
+                                    <span aria-hidden="true">
+                                        <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                        </header>
+                        <section
+                            class="scrollbar-thin scrollbar-thumb-primary scrollbar-track-green-300 overflow-y-scroll pt-5 h-full w-full max-w-7xl flex flex-col gap-4 md:gap-6 text-base">
+                            <h3 class="px-5 font-semibold md:text-lg text-primary dark:text-white">
+                                <span>Elbet Monthly Report</span>
+                                <span>2023-01-01 - 2023-01-31</span>
+                            </h3>
+
+                            <div class=''>
+                                <div class='flex flex-col md:flex-row gap-1 md:gap-2 pb-1 px-5'>
+                                    <div class='w-full md:max-w-[250px]'>
+                                        <label for="start-date" class='sr-only'>Start Date</label>
+                                        <input type="date" placeholder='Select Start Date'
+                                            class='rounded w-full py-[7px] text-gray-400 dark:text-gray-100 bg-white dark:bg-transparent text-xs border-gray-400'>
+                                    </div>
+                                    <div class='w-full md:max-w-[250px]'>
+                                        <label for="start-date" class='sr-only'>Start Date</label>
+                                        <input type="date" placeholder='Select Start Date'
+                                            class='rounded w-full py-[7px] text-gray-400 dark:text-gray-100 bg-white dark:bg-transparent text-xs border-gray-400'>
+                                    </div>
+                                    <div class='w-full text-xs'>
+                                        <button type='button'
+                                            class='rounded w-full sm:w-[80px] py-[7px] flex items-center justify-center border'>Filter</button>
+                                    </div>
+                                </div>
+                                <div
+                                    class="w-full text-xs flex flex-col gap-4 p-3 px-5 bg-white bg-opacity-50 shadow dark:bg-darker">
+                                    <div class='w-full flex flex-col'>
+                                        <div class='flex flex-col lg:flex-row items-center gap-2'>
+                                            <div class='w-full flex items-center gap-2'>
+                                                <title for='filter' class='sr-only'>Filter</title>
+                                                <select name="filter" id="filter"
+                                                    class='rounded w-full max-w-xs bg-transparent py-[3px] text-xs text-gray-500'>
+                                                    <option value="">10</option>
+                                                    <option value="">25</option>
+                                                    <option value="">50</option>
+                                                    <option value="">100</option>
+                                                    <option value="">Show All</option>
+                                                </select>
+                                                <span class='block'>Items/Page</span>
+                                            </div>
+                                            <div class='flex gap-3 items-center w-full'>
+                                                <div class='flex h-full w-full gap-2'>
+                                                    <button type='button'
+                                                        class='px-2 py-[3px] h-full flex border rounded'>Copy</button>
+                                                    <button type='button'
+                                                        class='px-2 py-[3px] h-full flex border rounded'>Excel</button>
+                                                    <button type='button'
+                                                        class='px-2 py-[3px] h-full flex border rounded'>CSV</button>
+                                                    <button type='button'
+                                                        class='px-2 py-[3px] h-full flex border rounded'>PDF</button>
+                                                </div>
+                                                <input type="text" placeholder='Search'
+                                                    class='rounded w-full max-w-sm h-6 text-gray-400 dark:text-gray-100 bg-white dark:bg-transparent text-xs border-gray-400' />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class='w-full px-4 py-6 flex flex-col overflow-x-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-green-300'>
+                                    <table class="table-auto text-sm text-left text-gray-500 dark:text-gray-400">
+                                        <thead
+                                            class="border-b text-xs px-3 bg-gray-200 hover:bg-gray-300 hover:bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-[35%] cursor-default dark:hover:bg-opacity-60">
+                                            <tr class=''>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2 pl-3 py-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            S/N</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            Elbet ID</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            AgencyCodeName</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            Username</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            Balance</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            NoOfTickets</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            MoneyIn</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            MoneyWin</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            MoneyPayout</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            Profit</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            Commission</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                                <th>
+                                                    <div class="flex gap-2 items-center justify-between px-2 pr-3">
+                                                        <div
+                                                            class="flex items-center justify-center text-[10px] lg:text-xs">
+                                                            Plan</div>
+                                                        <div
+                                                            class='flex flex-col justify-center items-center text-gray-300'>
+                                                            <button type='button' class='flex text-xs'>
+                                                                <span class='sr-only hidden'>Up Arrow</span>
+                                                                <i class='bi bi-caret-up-fill p-0'></i>
+                                                            </button>
+                                                            <button type='button' class='text-xs'>
+                                                                <span class='sr-only'>Up Arrow</span>
+                                                                <i class='bi bi-caret-down-fill'></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                class="text-xs bg-white border-b dark:bg-dark dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:bg-opacity-50">
+                                                <td>
+                                                    <span class="px-2 py-1 flex justify-center bg-gray-00">1</span>
+                                                </td>
+                                                <td>
+                                                    <span class="px-3 py-1 flex">30</span>
+                                                </td>
+                                                <td>
+                                                    <button type="button"
+                                                        class="py-1 px-2 flex text-blue-600 hover:text-blue-700 font-semibold"
+                                                        data-hs-overlay="#hs-slide-down-animation-modal">
+                                                        1377 - Farouk-Karfi
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">Farouk-Karfi</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">0.00</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">7,143</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">1,518,601.00</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">1,415,477.37</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">1,406,547.37</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">112,053.63</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">106,302.07</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">1 [7%]</span>
+                                                </td>
+                                            </tr>
+                                            <tr
+                                                class="text-xs bg-white border-b dark:bg-dark dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 dark:hover:bg-opacity-50">
+                                                <td>
+                                                    <span
+                                                        class="px-2 py-1 flex justify-center bg-gray-300 dark:bg-gray-800 dark:bg-opacity-25">2</span>
+                                                </td>
+                                                <td>
+                                                    <span class="px-3 py-1 flex">30</span>
+                                                </td>
+                                                <td>
+                                                    <button type="button"
+                                                        class="py-1 px-2 flex text-blue-600 hover:text-blue-700 font-semibold"
+                                                        data-hs-overlay="#hs-slide-down-animation-modal">
+                                                        1377 - Farouk-Karfi
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">Farouk-Karfi</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">0.00</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">7,143</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">1,518,601.00</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">1,415,477.37</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">1,406,547.37</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">112,053.63</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">106,302.07</span>
+                                                </td>
+                                                <td>
+                                                    <span class="py-1 px-2 flex">1 [7%]</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div
+                                        class='flex flex-col items-center gap-2 md:gap-1 md:flex-row md:justify-between border-t text-xs px-2 py-3 bg-gray-200 hover:bg-gray-300 hover:bg-opacity-75 dark:bg-gray-800 dark:bg-opacity-[35%] cursor-default dark:hover:bg-opacity-60'>
+                                        <div>Showing 1 to 10 of 74 entries</div>
+                                        <div class='flex gap-2 items-center'>
+                                            <button type='button' class='hover:text-primary'>Previous</button>
+                                            <button type='button'
+                                                class='flex justify-center items-center w-6 h-6 rounded border shadow hover:'>1</button>
+                                            <button type='button'
+                                                class='flex justify-center items-center w-6 h-6 rounded border shadow hover'>2</button>
+                                            <button type='button'
+                                                class='flex justify-center items-center w-6 h-6 rounded border shadow hover'>3</button>
+                                            <button type='button'
+                                                class='flex justify-center items-center w-6 h-6 rounded border shadow hover'>4</button>
+                                            <button type='button'
+                                                class='flex justify-center items-center w-6 h-6 rounded border shadow hover'>5</button>
+                                            <span>...</span>
+                                            <button type='button'
+                                                class='flex justify-center items-center w-6 h-6 rounded border shadow hover'>10</button>
+                                            <button type='button' class='hover:text-primary'>Next</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <footer class='flex flex-col items-center justify-center p-3 text-xs'>
+                            <div>
+                                &copy; DeevBet <span class='footer-date'></span> - Sofware Version 3.0
+                            </div>
+                            <div> Powered by StemLab</div>
+                        </footer>
+                    </main>
+                </div>
+                <!-- Panels -->
+                <!-- modal -->
+
+                <div id="hs-slide-down-animation-modal"
+                    class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto">
+                    <div
+                        class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-md sm:w-full m-3 sm:mx-auto">
+                        <div
+                            class="flex flex-col bg-white border shadow-sm rounded dark:bg-dark dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                            <div class="flex justify-between items-center py-1 px-2 border-b dark:border-gray-700">
+                                <h3 class="font-bold text-xs text-gray-600 dark:text-white">
+                                    View/Edit 1377-CSH-03
+                                </h3>
+                                <button type="button"
+                                    class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
+                                    data-hs-overlay="#hs-slide-down-animation-modal">
+                                    <span class="sr-only">Close</span>
+                                    <svg class="w-2.5 h-2.5" width="8" height="8" viewBox="0 0 8 8" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00648C7.05632 7.10078 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35252 7.80458 6.25822 7.71348L3.61171 5.06702L0.965207 7.71348C0.870907 7.80458 0.744606 7.85498 0.613506 7.85388C0.482406 7.85268 0.357007 7.80018 0.264297 7.70738C0.171597 7.61468 0.119017 7.48928 0.117877 7.35818C0.116737 7.22708 0.167126 7.10078 0.258206 7.00648L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z"
+                                            fill="currentColor" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <form
+                                class="flex flex-col gap-4 px-5 pt-3 pb-4 overflow-y-auto bg-gray-300 bg-opacity-[10%]">
+                                <div>
+                                    <label for="elbet-id" class='text-xs'>Elbet ID</label>
+                                    <input type="number" name='elbet-id' placeholder='0'
+                                        class='h-6 text-xs w-full bg-transparent'>
+                                </div>
+                                <div>
+                                    <label for="elbet-id" class='text-xs'>Elbet ID</label>
+                                    <input type="number" name='elbet-id' placeholder='0'
+                                        class='h-6 text-xs w-full bg-transparent'>
+                                </div>
+                                <div>
+                                    <label for="elbet-id" class='text-xs'>Elbet ID</label>
+                                    <select type="number" name='elbet-id' class='h-8 text-xs w-full bg-transparent'>
+                                        <option value="Kene Nnakwue">Kene Nnakwue</option>
+                                        <option value="Faruq Abiodun">Faruq Abiodun</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
+                                <button type="button"
+                                    class="hs-dropdown-toggle py-1 px-2 inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-primary text-white hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800"
+                                    data-hs-overlay="#hs-slide-down-animation-modal"
+                                    data-hs-overlay="#hs-slide-down-animation-modal">
+                                    Cancel
+                                </button>
+                                <button type="button"
+                                    class="hs-dropdown-toggle py-1 px-2 inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-xs dark:focus:ring-offset-gray-800"
+                                    data-hs-overlay="#hs-slide-down-animation-modal"
+                                    data-hs-overlay="#hs-slide-down-animation-modal">
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Settings Panel -->
+                <!-- Backdrop -->
+                <div x-transition:enter="transition duration-300 ease-in-out" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="transition duration-300 ease-in-out"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0"
+                    x-show="isSettingsPanelOpen" @click="isSettingsPanelOpen = false"
+                    class="fixed inset-0 z-10 bg-primary opacity-50" aria-hidden="true"></div>
+
+                <!-- Search panel -->
+                <!-- Backdrop -->
+                <div x-transition:enter="transition duration-300 ease-in-out" x-transition:enter-start="opacity-0"
+                    x-transition:enter-end="opacity-100" x-transition:leave="transition duration-300 ease-in-out"
+                    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-show="isSearchPanelOpen"
+                    @click="isSearchPanelOpen = false" class="fixed inset-0 z-10 bg-primary opacity-50"
+                    aria-hidden="true"></div>
+                <!-- Panel -->
+                <section x-transition:enter="transition duration-300 ease-in-out transform sm:duration-500"
+                    x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
+                    x-transition:leave="transition duration-300 ease-in-out transform sm:duration-500"
+                    x-transition:leave-start="translate-x-0" x-transition:leave-end="-translate-x-full"
+                    x-show="isSearchPanelOpen" @keydown.escape="isSearchPanelOpen = false"
+                    class="fixed inset-y-0 z-20 w-full max-w-xs bg-white shadow-xl dark:bg-darker dark:text-light sm:max-w-md focus:outline-none">
+                    <div class="absolute right-0 p-2 transform translate-x-full">
+                        <!-- Close button -->
+                        <button type='button' @click="isSearchPanelOpen = false"
+                            class="p-2 text-white rounded-md focus:outline-none focus:ring">
+                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            <span class='sr-only'>Search Panel close Button</span>
+                        </button>
+                    </div>
+
+                    <h2 class="sr-only">Search panel</h2>
+                    <!-- Panel content -->
+                    <div class="flex flex-col h-screen">
+                        <!-- Panel header (Search input) -->
+                        <div
+                            class="relative flex-shrink-0 px-4 py-8 text-gray-400 border-b dark:border-indigo-800 dark:focus-within:text-light focus-within:text-gray-700">
+                            <span class="absolute inset-y-0 inline-flex items-center px-4">
+                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                            </span>
+                            <input x-ref="searchInput" type="text"
+                                class="w-full py-2 pl-10 pr-4 border rounded-full dark:bg-dark dark:border-transparent dark:text-light focus:outline-none focus:ring"
+                                placeholder="Search..." />
+                        </div>
+
+                        <!-- Panel content (Search result) -->
+                        <div class="flex-1 px-4 pb-4 space-y-4 overflow-y-hidden h hover:overflow-y-auto">
+                            <h3 class="py-2 text-sm font-semibold text-gray-600 dark:text-light">History</h3>
+                            <p class="px=4">Search result</p>
+                            <!--  -->
+                            <!-- Search content -->
+                            <!--  -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <script src='../../script.js'></script>
+    <script src="../../../node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src='../../../node_modules/alpinejs/src/alpine.js'></script>
+    <script src='../../../node_modules/alpinejs/dist/cdn.js'></script>
+    <script
+        src="https://cdn.jsdelivr.net/gh/alpine-collective/alpine-magic-helpers@0.6.x/dist/component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
+</body>
+
+</html>
